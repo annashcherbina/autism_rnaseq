@@ -1,0 +1,16 @@
+GO	FDR
+regulation of neuron differentiation	8.87E-07
+regulation of nervous system development	9.77E-07
+negative regulation of cell differentiation	2.76E-06
+regulation of cell proliferation	4.67E-05
+regulation of cell projection organization	2.28E-04
+glial cell differentiation	4.73E-04
+axon guidance	9.88E-04
+neuron projection guidance	1.01E-03
+regulation of plasma membrane bounded cell projection organization	1.14E-03
+pattern specification process	3.35E-03
+regulation of neuron projection development	3.76E-03
+response to growth factor	5.03E-03
+regionalization	6.35E-03
+negative regulation of astrocyte differentiation	6.17E-03
+neuron recognition	8.31E-03
