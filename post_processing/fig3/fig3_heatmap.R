@@ -7,7 +7,7 @@ library("devtools")
 source_url("https://raw.githubusercontent.com/obigriffith/biostar-tutorials/master/Heatmaps/heatmap.3.R")
 
 source("~/helpers.R")
-data=read.table("corrected.tpm.pval.lt.5e-6.txt",header=TRUE,sep='\t',row.names = 1,check.names=FALSE)
+data=read.table("fig3_genes.tpm.txt",header=TRUE,sep='\t',row.names = 1,check.names=FALSE)
 batches=read.table("../merged_rsem/batches.txt",header=TRUE,sep='\t',row.names=1)
 merged=merge(t(data),batches,by=0)
 merged$Condition=factor(merged$Condition,levels=c("TDN","ASDN","ASDDM"))
@@ -42,7 +42,7 @@ cols <- colorRampPalette(brewer.pal(10, "RdBu"))(256)
 
 distCor <- function(x) as.dist(1-cor(t(x)))
 hclustAvg <- function(x) hclust(x, method="average")
-png(file="genes.NPC.pval.lt.5e-6.png",width=10,height=9,units='in',res=300)
+pdf(file="heatmap_palmer_fig3_genes.pdf",width=10,height=9)
 heatmap.3(merged,
           trace="none",
           scale="row",
