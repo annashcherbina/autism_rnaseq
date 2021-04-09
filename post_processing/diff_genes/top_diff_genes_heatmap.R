@@ -7,7 +7,7 @@ library("devtools")
 source_url("https://raw.githubusercontent.com/obigriffith/biostar-tutorials/master/Heatmaps/heatmap.3.R")
 
 source("~/helpers.R")
-data=read.table("corrected.tpm.pval.lt.5e-6.txt",header=TRUE,sep='\t',row.names = 1,check.names=FALSE)
+data=read.table("corrected.tpm.pval.lt.5e-6.noensgid.txt",header=TRUE,sep='\t',row.names = 1,check.names=FALSE)
 batches=read.table("../merged_rsem/batches.txt",header=TRUE,sep='\t',row.names=1)
 merged=merge(t(data),batches,by=0)
 merged$Condition=factor(merged$Condition,levels=c("TDN","ASDN","ASDDM"))
@@ -55,6 +55,7 @@ heatmap.3(merged,
           ColSideColorsSize = 2,
           ColSideColors = as.matrix(colsidecolors),
           symbreak=FALSE,
+          cexRow=1,
           margins=c(5,20))
 
 legend('topright',legend=c("IPSC","NPC","","TDN","ASDN","ASDDM"),

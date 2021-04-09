@@ -7,11 +7,11 @@ library("devtools")
 source_url("https://raw.githubusercontent.com/obigriffith/biostar-tutorials/master/Heatmaps/heatmap.3.R")
 
 source("~/helpers.R")
-data=read.table("corrected.tpm.pval.lt.5e-6.ASD.combined.txt",header=TRUE,sep='\t',row.names = 1,check.names=FALSE)
+data=read.table("corrected.tpm.pval.lt.5e-6.ASD.combined.noensgid.txt",header=TRUE,sep='\t',row.names = 1,check.names=FALSE)
 batches=read.table("../merged_rsem/batches.txt",header=TRUE,sep='\t',row.names=1)
 merged=merge(t(data),batches,by=0)
 merged$Condition=factor(merged$Condition,levels=c("TDN","ASDN","ASDDM"))
-merged$ASD="ASD"
+merged$ASD="ASD combined"
 merged$ASD[merged$Condition=="TDN"]="TDN"
 merged$Condition=merged$ASD
 # Sort by vector name [z] then [x]
@@ -19,6 +19,7 @@ merged=merged[
   with(merged, order(Cell, Condition, Sample)),
 ]
 cells=merged$Cell
+condition=merged$Condition
 merged$Cell=NULL 
 merged$Condition=NULL
 merged$ASD=NULL
@@ -34,7 +35,7 @@ colsidecolors=data.frame(cells,condition)
 colsidecolors[colsidecolors=="IPSC"]="#888888"
 colsidecolors[colsidecolors=="NPC"]="#000000"
 colsidecolors[colsidecolors=="TDN"]="#FF0000"
-colsidecolors[colsidecolors=="ASD"]="#00FF00"
+colsidecolors[colsidecolors=="ASD combined"]="#00FF00"
 colnames(colsidecolors)=c("Celltype","Condition")
 
 require(gtools)
@@ -56,9 +57,9 @@ heatmap.3(merged,
           ColSideColorsSize = 2,
           ColSideColors = as.matrix(colsidecolors),
           symbreak=FALSE,
+          cexRow=1,
           margins=c(5,20))
-
-legend('topright',legend=c("IPSC","NPC","","TDN","ASD"),
+legend('topright',legend=c("IPSC","NPC","","TDN","ASD Combined"),
        fill=c("#888888","#000000","#FFFFFF","#FF0000","#00FF00"),
        border=FALSE, bty="n", y.intersp = 0.6, cex=0.7)
 dev.off()
