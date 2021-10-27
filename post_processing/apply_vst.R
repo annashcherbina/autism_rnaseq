@@ -15,19 +15,26 @@ data=data[rowSums(data[,2:dim(data)[2]])>0,]
 data[,2:25]=round(data[,2:25])
 
 #make DESEQ design matrix 
-batches$id=batches$TechRep
+batches$Condition=factor(batches$Condition)
+batches$Batch=factor(batches$Batch)
+
 dds <- DESeqDataSetFromMatrix(countData=data, 
                               colData=batches, 
-                              design=~Condition, tidy = TRUE)
-
+                              design=~Condition+Batch, tidy = TRUE)
 vsd <- varianceStabilizingTransformation(dds,blind=FALSE)
+mat=assay(vsd)
+mod1=model.matrix(~Condition,data=batches)
+
+mat=limma::removeBatchEffect(mat,vsd$Batch,design=mod1)
+assay(vsd)=mat
+
 dists <- dist(t(assay(vsd)))
 plot(hclust(dists))
 
-
-dds <- estimateSizeFactors(dds)
-dds <- estimateDispersions(dds)
-
+DESeq2::plotPCA(vsd,intgroup=c("Batch"))
+DESeq2::plotPCA(vsd,intgroup=c("Condition"))
 
 data_stabilized=getVarianceStabilizedData(dds)
-write.table(data_stabilized,file="NPC_only.VST_corrected.txt",sep='\t',row.names = T,col.names = T,quote=F)
+write.table(mat,file="NPC_only.VST_corrected.txt",sep='\t',row.names = T,col.names = T,quote=F)
+
+saveRDS(vsd, file = "NPC_vsd.rds")
