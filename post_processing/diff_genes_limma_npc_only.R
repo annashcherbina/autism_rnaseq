@@ -111,17 +111,35 @@ for(i in seq(1,length(comparisons)))
   volcanoplot(e,coef=i,style='p-value',highlight=10)
 }
 
+tpm_cd99=tpm['ENSG00000223773.7||CD99P1',]
+batches$cd99=tpm_cd99
+ggplot(batches,
+       aes(x=batches$Condition,
+           y=batches$cd99))+
+  geom_boxplot()+
+  xlab("Condition")+
+  ylab("Corrected TPM cd99")
+write.table(batches,file="tpm_cd47.txt",row.names = TRUE,col.names = TRUE,sep='\t')
+
 tpm=2^cleaned_E
 write.table(tpm,file="NPC_only.corrected_tpm.txt",row.names=TRUE,col.names=TRUE,sep='\t')
-tpm_cd47=tpm['ENSG00000196776.16-CD47',]
+tpm_cd47=tpm['ENSG00000196776.16||CD47',]
 batches$cd47=tpm_cd47
 ggplot(batches,
        aes(x=batches$Condition,
-           y=batches$cd47,
-           fill=batches$Cell))+
-  geom_boxplot()
+           y=batches$cd47))+
+  geom_boxplot()+
+  xlab("Condition")+
+  ylab("Corrected TPM CD47")
 write.table(batches,file="tpm_cd47.txt",row.names = TRUE,col.names = TRUE,sep='\t')
 
-tpm_pax6=tpm['ENSG00000007372.23-PAX6',]
+tpm_pax6=tpm['ENSG00000007372.23||PAX6',]
 batches$pax6=tpm_pax6
+ggplot(batches,
+       aes(x=batches$Condition,
+           y=batches$pax6))+
+  geom_boxplot()+
+  xlab("Condition")+
+  ylab("Corrected TPM pax6")
+
 write.table(batches,file="tpm_pax6.txt",row.names = TRUE,col.names = TRUE,sep='\t')
