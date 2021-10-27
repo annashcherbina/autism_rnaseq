@@ -1,7 +1,7 @@
 library(VennDiagram)
-asddm_vs_tdn=read.table("NPC_ASDDM_TDN.diff.genes.txt")$V1
-asddm_vs_asdn=read.table("NPC_ASDDM_ASDN.diff.genes.txt")$V1
-asdn_vs_tdn=read.table("NPC_ASDN_TDN.diff.genes.txt")$V1
+asddm_vs_tdn=row.names(read.table("../pval.lt.0.001.lfc.gt.2.NPC_ASDDM_TDN.diff.tsv"))
+asddm_vs_asdn=row.names(read.table("../pval.lt.0.001.lfc.gt.2.NPC_ASDDM_ASDN.diff.tsv"))
+asdn_vs_tdn=row.names(read.table("../pval.lt.0.001.lfc.gt.2.NPC_ASDN_TDN.diff.tsv"))
 library(RColorBrewer)
 myCol <- brewer.pal(3, "Pastel2")
 venn.diagram(

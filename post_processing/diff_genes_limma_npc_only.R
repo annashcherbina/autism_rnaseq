@@ -3,7 +3,7 @@ library(limma)
 library(sva)
 library(ggplot2)
 
-data=read.table("merged_rsem/rna.counts.txt.tpm",header=TRUE)
+data=read.table("merged_rsem/rna.counts.txt.tpm",header=TRUE,check.names = T)
 batches=read.table("merged_rsem/batches.txt",header=TRUE)
 batches$Sample=factor(batches$Sample)
 
@@ -110,6 +110,9 @@ for(i in seq(1,length(comparisons)))
   write.table(topTable(e,number=nrow(e),coef=i),paste(file=comparisons[i],'diff','tsv',sep='.'),row.names=TRUE,col.names=TRUE,sep='\t')
   volcanoplot(e,coef=i,style='p-value',highlight=10)
 }
+tpm=2^cleaned_E
+write.table(tpm,file="NPC_only.corrected_tpm.txt",row.names=TRUE,col.names=TRUE,sep='\t')
+
 
 tpm_cd99=tpm['ENSG00000223773.7||CD99P1',]
 batches$cd99=tpm_cd99
@@ -121,8 +124,7 @@ ggplot(batches,
   ylab("Corrected TPM cd99")
 write.table(batches,file="tpm_cd47.txt",row.names = TRUE,col.names = TRUE,sep='\t')
 
-tpm=2^cleaned_E
-write.table(tpm,file="NPC_only.corrected_tpm.txt",row.names=TRUE,col.names=TRUE,sep='\t')
+
 tpm_cd47=tpm['ENSG00000196776.16||CD47',]
 batches$cd47=tpm_cd47
 ggplot(batches,
