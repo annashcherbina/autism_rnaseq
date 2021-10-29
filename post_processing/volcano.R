@@ -1,8 +1,8 @@
 rm(list=ls())
 library(ggplot2)
 source("~/helpers.R")
-pthresh=0.001
-lfc_thresh=2
+pthresh=5e-11
+lfc_thresh=7
 
 npc_asddm_asdn=read.table("diff_genes/ASDDM_ASDN.diff.tsv",header=TRUE,sep='\t')
 npc_asddm_asdn$Gene=row.names(npc_asddm_asdn)

@@ -8,15 +8,15 @@ source_url("https://raw.githubusercontent.com/obigriffith/biostar-tutorials/mast
 
 source("~/helpers.R")
 data=read.table("fig3_genes.tpm.txt",header=TRUE,sep='\t',row.names = 1,check.names=FALSE)
-batches=read.table("../merged_rsem/batches.txt",header=TRUE,sep='\t',row.names=1)
+batches=read.table("../merged_rsem/batches.txt",header=TRUE,sep='\t',row.names=1,check.names = T)
+batches=batches[batches$Cell=="NPC",]
 merged=merge(t(data),batches,by=0)
 merged$Condition=factor(merged$Condition,levels=c("TDN","ASDN","ASDDM"))
 
 # Sort by vector name [z] then [x]
 merged=merged[
-  with(merged, order(Cell, Condition, Sample)),
+  with(merged, order(Condition, Sample)),
 ]
-cells=merged$Cell
 condition=as.character(merged$Condition)
 merged$Cell=NULL 
 merged$Condition=NULL
@@ -26,15 +26,13 @@ merged=as.data.frame(merged)
 row.names(merged)=merged$Row.names
 merged$Row.names=NULL 
 merged=as.matrix(t(merged))
-colsidecolors=data.frame(cells,condition)
+colsidecolors=data.frame(condition)
 
 #replace colsidecolors with color names 
-colsidecolors[colsidecolors=="IPSC"]="#888888"
-colsidecolors[colsidecolors=="NPC"]="#000000"
 colsidecolors[colsidecolors=="TDN"]="#FF0000"
 colsidecolors[colsidecolors=="ASDN"]="#00FF00"
 colsidecolors[colsidecolors=="ASDDM"]="#0000FF"
-colnames(colsidecolors)=c("Celltype","Condition")
+colnames(colsidecolors)=c("Condition")
 
 require(gtools)
 require(RColorBrewer)
