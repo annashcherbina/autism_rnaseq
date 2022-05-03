@@ -88,3 +88,8 @@ last_val_df.to_csv("last_vals.txt",header=True,index=True,sep='\t')
 delta_val_df=pd.DataFrame.from_dict(delta_vals,orient='index')
 delta_val_df.to_csv("delta_vals.txt",header=True,index=True,sep='\t')
 
+outf=open('subject_to_condition.txt','w')
+outf.write('Subject\tCondition\n')
+for subject in subject_to_condition:
+    outf.write(subject+'\t'+str(subject_to_condition[subject])+'\n')
+outf.close()

@@ -89,3 +89,89 @@ heatmap.3(clin_metrics,
 legend('left',legend=c("TDN","ASDN","ASDDM"),
        fill=c("#FF0000","#00FF00","#0000FF"),
        border=FALSE, bty="n", y.intersp = 0.8, cex=0.7)
+
+############################################
+### FILTERED DATA FOR FIRST, LAST, DELTA ### 
+############################################
+conditions=read.table('subject_to_condition.txt',header=T,sep='\t')
+conditions=conditions[order(conditions$Condition),]
+rowsidecolors=data.frame(conditions$Condition)
+#replace rowsidecolors with color names
+rowsidecolors[rowsidecolors=="TD-N"]="#FF0000"
+rowsidecolors[rowsidecolors=="ASD-N"]="#00FF00"
+rowsidecolors[rowsidecolors=="ASD-DM"]="#0000FF"
+colnames(rowsidecolors)=c("Condition")
+
+first_data=read.table("first_vals.txt",header=T,sep='\t',row.names = 1)
+first_data=first_data[conditions$Subject,]
+
+last_data=read.table("last_vals.txt",header=T,sep='\t',row.names=1)
+last_data=last_data[conditions$Subject,]
+
+delta_data=read.table("delta_vals.txt",header=T,sep='\t',row.names=1)
+common_subjects=intersect(conditions$Subject,
+                          row.names(delta_data))
+delta_data=delta_data[common_subjects,]
+delta_rowsidecolors=as.data.frame(conditions[conditions$Subject %in% common_subjects,c("Condition")])
+#replace rowsidecolors with color names
+delta_rowsidecolors[delta_rowsidecolors=="TD-N"]="#FF0000"
+delta_rowsidecolors[delta_rowsidecolors=="ASD-N"]="#00FF00"
+delta_rowsidecolors[delta_rowsidecolors=="ASD-DM"]="#0000FF"
+colnames(delta_rowsidecolors)=c("Condition")
+
+
+heatmap.3(first_data,
+          trace="none",
+          scale="column",
+          Rowv=FALSE,
+          Colv=FALSE,
+          distfun=distCor,
+          hclustfun=hclustAvg,
+          col=rev(cols),
+          main="First Observation",
+          RowSideColorsSize = 2,
+          RowSideColors = t(as.matrix(rowsidecolors)),
+          dendrogram = 'none',
+          symbreak=FALSE,
+          margins=c(20,10))
+
+legend('left',legend=c("TDN","ASDN","ASDDM"),
+       fill=c("#FF0000","#00FF00","#0000FF"),
+       border=FALSE, bty="n", y.intersp = 0.8, cex=0.7)
+heatmap.3(last_data,
+          trace="none",
+          scale="column",
+          Rowv=FALSE,
+          Colv=FALSE,
+          distfun=distCor,
+          hclustfun=hclustAvg,
+          col=rev(cols),
+          main="Final Observation",
+          RowSideColorsSize = 2,
+          RowSideColors = t(as.matrix(rowsidecolors)),
+          dendrogram = 'none',
+          symbreak=FALSE,
+          margins=c(20,10))
+
+legend('left',legend=c("TDN","ASDN","ASDDM"),
+       fill=c("#FF0000","#00FF00","#0000FF"),
+       border=FALSE, bty="n", y.intersp = 0.8, cex=0.7)
+
+heatmap.3(delta_data,
+          trace="none",
+          scale="column",
+          Rowv=FALSE,
+          Colv=FALSE,
+          distfun=distCor,
+          hclustfun=hclustAvg,
+          col=rev(cols),
+          main="Delta Observation",
+          RowSideColorsSize = 2,
+          RowSideColors = t(as.matrix(delta_rowsidecolors)),
+          dendrogram = 'none',
+          symbreak=FALSE,
+          margins=c(20,10))
+
+legend('left',legend=c("TDN","ASDN","ASDDM"),
+       fill=c("#FF0000","#00FF00","#0000FF"),
+       border=FALSE, bty="n", y.intersp = 0.8, cex=0.7)
