@@ -6,19 +6,20 @@ conditions$MajorGroup='ASD'
 conditions$MajorGroup[conditions$Condition=='TD-N']='TD'
 
 #first
-first=read.table('first_vals.txt',header=T,sep='\t',row.names=1)
+first=as.data.frame(scale(read.table('first_vals.txt',header=T,sep='\t',row.names=1)))
 features=colnames(first)
 
 first$Subject=rownames(first)
 first=merge(first,conditions,by='Subject')
 
 #last 
-last=read.table('last_vals.txt',header=T,sep='\t',row.names=1)
+last=as.data.frame(scale(read.table('last_vals.txt',header=T,sep='\t',row.names=1)))
 last$Subject=rownames(last)
 last=merge(last,conditions,by="Subject")
 
 #merge them 
-merged=rbind(first,last)
+#merged=rbind(first,last)
+merged=last
 anova_effects=NULL
 wilcox_effects=NULL
 for(feature in features)
@@ -34,7 +35,7 @@ for(feature in features)
   }else{
     anova_effects=rbind(anova_effects,anova.out)
   }
-  #t-test between ASD & TD
+  #wilcox-test between ASD & TD
   asd_group=merged[merged$MajorGroup=='ASD',c(feature)]
   asd_group<-asd_group[!is.na(asd_group)]
   td_group=merged[merged$MajorGroup=='TD',c(feature)]
@@ -55,5 +56,5 @@ for(feature in features)
   }
 }
 # write to output 
-
-# plot the TukeyHSD for sig 
+write.table(wilcox_effects,'wilcox_effects.last.tsv',row.names = T,col.names = T,sep='\t')
+write.table(anova_effects,'anova_effects.last.tsv',row.names = T,col.names = T,sep='\t')
