@@ -34,7 +34,6 @@ volcano_wrapper=function(df,genes_to_highlight=c(),title="",pval_thresh=0.01,lfc
     caption = "",
     colCustom = keyvals,
     labSize = 4,
-    xlim=c(-10,10),
-    ylim=c(0,10)
+    xlim=c(-50,50)
   )
 }

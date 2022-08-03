@@ -3,7 +3,7 @@ library(limma)
 library(sva)
 library(ggplot2)
 
-data=read.table("merged_rsem/rna.counts.txt.tpm",header=TRUE)
+data=read.table("merged_rsem/rna.counts.txt.tpm",header=TRUE,check.names = F)
 batches=read.table("merged_rsem/batches.txt",header=TRUE)
 
 # columns to paste together

@@ -1,83 +1,47 @@
+rm(list=ls())
 library(ggplot2)
-source("~/helpers.R")
-data=t(read.table("genes_of_interest.tpm.txt",header=TRUE,sep='\t',row.names = 1,check.names=FALSE))
+
+genes_of_interest=c("HERC5",
+                    "IFIT3",
+                    "IFITM2",
+                    "ISG15",
+                    "ISG20",
+                    "MX1",
+                    "CD99",
+                    "KIF22",
+                    "MAZ",
+                    "PLCG1",
+                    "FLNB",
+                    "PPP4C",
+                    "DOC2A",
+                    "PRRT2",
+                    "SEZ6L2")
+#genes_of_interest=c("GAPDH","TFRC","HSP90AB1","RPL30","RPS17","RPL37A","PPIA","RNA18S1","B2M","RPLPO","HPRT1","POP4","CDKN1B","ELF1")
+genes_of_interest=c("CLDN6","IFIT1","KLF11", "MX1","FOXJ1","HERC5","PARP14","ISG20","SPINK5","LUM","UCP3","ETS1","SSTR2","IFIH1","C5AR1")
+data=read.table("NPC_only.corrected_tpm.txt",header=TRUE,sep='\t',row.names = 1,check.names=FALSE)
+#subset data to genes of interest
+data=data[genes_of_interest,]
+data=as.data.frame(t(data))
 batches=read.table("merged_rsem/batches.txt",header=TRUE,sep='\t',row.names=1)
-batches=batches[batches$Cell=="NPC",]
 
 data=merge(data,batches,by=0)
-data$Condition=factor(data$Condition,levels=c("TDN","ASDN","ASDDM"))
-p1=ggplot(data=data,
-       aes(x=Condition,y=`ENSG00000007372.23-PAX6`))+
-    geom_boxplot(color='#FF0000',outlier.shape = NA)+
-    geom_jitter()+
-    theme_bw(15)+
-  ylab("TPM")+
-  ggtitle("PAX6 TPM, NPC")
 
-p2=ggplot(data=data,
-          aes(x=Condition,y=`ENSG00000106689.11-LHX2`))+
-  geom_boxplot(color='#FF0000',outlier.shape = NA)+
-  geom_jitter()+
-  theme_bw(15)+
-  ylab("TPM")+
-  ggtitle("LHX2 TPM, NPC")
+conditions = c("TDN","ASDN","ASDDM")
 
-p3=ggplot(data=data,
-          aes(x=Condition,y=`ENSG00000138083.5-SIX3`))+
-  geom_boxplot(color='#FF0000',outlier.shape = NA)+
-  geom_jitter()+
-  theme_bw(15)+
-  ylab("TPM")+
-  ggtitle("SIX3 TPM, NPC")
-
-p4=ggplot(data=data,
-          aes(x=Condition,y=`ENSG00000170370.12-EMX2`))+
-  geom_boxplot(color='#FF0000',outlier.shape = NA)+
-  geom_jitter()+
-  theme_bw(15)+
-  ylab("TPM")+
-  ggtitle("EMX2 TPM, NPC")
-p9=ggplot(data=data,
-          aes(x=Condition,y=`ENSG00000106689.11-LHX2`))+
-  geom_boxplot(color='#FF0000',outlier.shape = NA)+
-  geom_jitter()+
-  theme_bw(15)+
-  ylab("TPM")+
-  ggtitle("LHX2 TPM, NPC")
-
-p5=ggplot(data=data,
-          aes(x=Condition,y=`ENSG00000196776.16-CD47`))+
-  geom_boxplot(color='#FF0000',outlier.shape = NA)+
-  geom_jitter()+
-  theme_bw(15)+
-  ylab("TPM")+
-  ggtitle("CD47 TPM, NPC")
+data$Condition=factor(data$Condition, levels=conditions)
 
 
-p6=ggplot(data=data,
-          aes(x=Condition,y=`ENSG00000002586.20-CD99`))+
-  geom_boxplot(color='#FF0000',outlier.shape = NA)+
-  geom_jitter()+
-  theme_bw(15)+
-  ylab("TPM")+
-  ggtitle("CD99 TPM, NPC")
-
-p7=ggplot(data=data,
-          aes(x=Condition,y=`ENSG00000102181.21-CD99L2`))+
-  geom_boxplot(color='#FF0000',outlier.shape = NA)+
-  geom_jitter()+
-  theme_bw(15)+
-  ylab("TPM")+
-  ggtitle("CD99L2 TPM, NPC")
-
-
-p8=ggplot(data=data,
-          aes(x=Condition,y=`ENSG00000223773.7-CD99P1`))+
-  geom_boxplot(color='#FF0000',outlier.shape = NA)+
-  geom_jitter()+
-  theme_bw(15)+
-  ylab("TPM")+
-  ggtitle("CD99P1 TPM, NPC")
-
-
-multiplot(p1,p2,p3,p4,p5,p6,p7,p8,cols=4)
+plot.list = lapply(genes_of_interest, function(gene){
+    p <- ggplot(data=data,
+                aes(x=data$Condition,
+                    y=data[[gene]]))+
+      geom_boxplot(color='#FF0000',outlier.shape=NA)+
+      geom_jitter()+
+      ylab("TPM")+
+      xlab("Condition")+
+      ggtitle(paste(gene,'\nTPM,',"NPC"))+
+      theme_bw(20)
+    return(p)
+  })
+library(gridExtra)
+grid.arrange(grobs = plot.list, ncol=5,nrow=3)
