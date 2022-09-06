@@ -4,7 +4,7 @@ import argparse
 import pdb 
 def parse_args():
     parser=argparse.ArgumentParser(description="aggregate RSEM gene and transcript files across all age replicates ")
-    parser.add_argument("--rsem_file_list",default="rsem.gene.cd47.files.txt")
+    parser.add_argument("--rsem_file_list",default="genes.samples.txt")
     parser.add_argument("--ensembl_id_to_gene_name",default="hg38.gencode.v1.gid_to_name.txt")
     parser.add_argument("--outf_prefix",default="rna.counts.txt")
     return parser.parse_args()

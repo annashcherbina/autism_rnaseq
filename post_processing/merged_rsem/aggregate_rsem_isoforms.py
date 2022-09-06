@@ -44,9 +44,10 @@ def main():
         )
         print(f"Unexpected error:{e}")
         raise
+    map_file.index=[i.split('.')[0] for i in map_file.index]
     map_dict = map_file.to_dict()[1]
     print("generated ENSGID -> Gene Symbol dictionary")
-
+    print(map_dict) 
     tpm_vals = []
     fpkm_vals = []
     expected_count_vals = []
@@ -92,20 +93,20 @@ def main():
     print("merged sample data frames")
 
     tpm_df["Symbol"] = [
-        map_dict[gene_id] if gene_id in map_dict else gene_id
+        map_dict[gene_id.split('.')[0]] if gene_id.split('.')[0] in map_dict else gene_id
         for gene_id in tpm_df["gene_id"]
     ]
     fpkm_df["Symbol"] = [
-        map_dict[gene_id] if gene_id in map_dict else gene_id
+        map_dict[gene_id.split('.')[0]] if gene_id.split('.')[0] in map_dict else gene_id
         for gene_id in fpkm_df["gene_id"]
     ]
     expected_count_df["Symbol"] = [
-        map_dict[gene_id] if gene_id in map_dict else gene_id
+        map_dict[gene_id.split('.')[0]] if gene_id.split('.')[0] in map_dict else gene_id
         for gene_id in expected_count_df["gene_id"]
     ]
 
     iso_pct_df["Symbol"] = [
-        map_dict[gene_id] if gene_id in map_dict else gene_id
+        map_dict[gene_id.split('.')[0]] if gene_id.split('.')[0] in map_dict else gene_id
         for gene_id in iso_pct_df["gene_id"]
     ]
 
