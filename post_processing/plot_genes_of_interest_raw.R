@@ -14,7 +14,10 @@ genes_of_interest=c("ENSG00000138646.9-HERC5",
                     "ENSG00000149927.18-DOC2A",
                     "ENSG00000167371.21-PRRT2",
                     "ENSG00000174938.14-SEZ6L2")
-
+genes_of_interest=c("ENSG00000120885.22-CLU",
+                    "ENSG00000137331.12-IER3",
+                    "ENSG00000067225.18-PKM",
+                    "ENSG00000135549.15-PKIB")
 data=read.table("merged_rsem/rna.counts.txt.tpm",header=TRUE,sep='\t')
 # columns to paste together
 cols <- c( 'GeneID' , 'GeneName')
@@ -35,7 +38,7 @@ conditions = c("TDN","ASDN","ASDDM")
 
 data$Condition=factor(data$Condition, levels=conditions)
 
-celltype = c("IPSC")#, "NPC")
+celltype = c("IPSC","NPC")
 
 plot.list = sapply(genes_of_interest, function(gene){
   p.list = lapply(celltype, function(ct){
@@ -52,8 +55,8 @@ plot.list = sapply(genes_of_interest, function(gene){
       theme(plot.title = element_text(size = 8))
     return(p)
   })
-  p <- ggpubr::ggarrange(plotlist = p.list, ncol = 2, nrow = 1, align = "v")
-  return(p)
-}, simplify = F)
+  return(p.list)
+}, simplify = T)
 
-ggpubr::ggarrange(plotlist = plot.list)
+library(gridExtra)
+grid.arrange(grobs = plot.list,ncol=2)

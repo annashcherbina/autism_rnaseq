@@ -11,8 +11,8 @@ row.names(data)=data$GeneID
 data$GeneID=NULL
 
 batches$TechRep=as.character(batches$TechRep)
-data=data[,batches$TechRep[batches$Cell=="NPC"]]
-batches=batches[batches$Cell=="NPC",]
+data=data[,batches$TechRep[batches$Cell=="IPSC"]]
+batches=batches[batches$Cell=="IPSC",]
 row.names(batches)=batches$TechRep
 
 print(dim(data))
@@ -65,8 +65,8 @@ pca_df=data.frame(data.pca$x)
 pca_df=cbind(pca_df,batches)
 pca_df$Sample=factor(pca_df$Sample)
 p1=ggplot(data=pca_df,aes(x=pca_df$PC1,
-                       y=pca_df$PC2,
-                      color=pca_df$Sample))+
+                          y=pca_df$PC2,
+                          color=pca_df$Sample))+
   geom_point(size=3)+
   xlab(paste("PC1:",var_explained[1]))+
   ylab(paste("PC2:",var_explained[2]))+
@@ -139,11 +139,11 @@ p3=ggplot(data=pca_df,aes(x=pca_df$PC1,
   theme(legend.position="bottom")
 
 multiplot(p1,p2,p3,cols=3)
-batches$Condition=paste0("NPC",batches$Condition)
+batches$Condition=paste0("IPSC",batches$Condition)
 #GET VARIANCE ACROSS SAMPLES RELATIVE TO THE MEAN 
-tdn_sub=2^cleaned_E[,batches$TechRep[batches$Condition=="NPCTDN"]]
-asdn_sub=2^cleaned_E[,batches$TechRep[batches$Condition=="NPCASDN"]]
-asddm_sub=2^cleaned_E[,batches$TechRep[batches$Condition=="NPCASDDM"]]
+tdn_sub=2^cleaned_E[,batches$TechRep[batches$Condition=="IPSCTDN"]]
+asdn_sub=2^cleaned_E[,batches$TechRep[batches$Condition=="IPSCASDN"]]
+asddm_sub=2^cleaned_E[,batches$TechRep[batches$Condition=="IPSCASDDM"]]
 
 tdn_sub_var_mean_ratio=rowVars(tdn_sub)/rowMeans(tdn_sub)
 asdn_sub_var_mean_ratio=rowVars(asdn_sub)/rowMeans(asdn_sub)
@@ -159,8 +159,8 @@ pthresh=0.01
 lfc_thresh=1 #fold change of 2
 mod1=model.matrix(~0+Condition,data=batches)
 
-g1=c("ConditionNPCASDDM","ConditionNPCASDDM","ConditionNPCASDN")
-g2=c("ConditionNPCASDN","ConditionNPCTDN","ConditionNPCTDN")
+g1=c("ConditionIPSCASDDM","ConditionIPSCASDDM","ConditionIPSCASDN")
+g2=c("ConditionIPSCASDN","ConditionIPSCTDN","ConditionIPSCTDN")
 for(i in seq(1,3))
 {
   comparison=paste(g1[i],'vs',g2[i],sep='_')
@@ -228,4 +228,4 @@ for(i in seq(1,3))
   print(vis_go)
 }
 
-write.table(2^cleaned_E,file="NPC_only.corrected_tpm.txt",row.names=TRUE,col.names=TRUE,sep='\t')
+write.table(2^cleaned_E,file="IPSC_only.corrected_tpm.txt",row.names=TRUE,col.names=TRUE,sep='\t')

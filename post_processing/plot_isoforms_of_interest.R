@@ -18,8 +18,26 @@ genes_of_interest=c("ISG20",
                     "UCP3",
                     "RHOU",
                     "WNT7B")
-data=read.table("merged_rsem/tpm.isoform.txt",header=TRUE,sep='\t',row.names = 1,check.names=T)
-pct=read.table("merged_rsem/iso_pct.isoform.txt",header=T,sep='\t',row.names=1,check.names=T)
+genes_of_interest=c("IFI6",
+                    "HTRA1",
+                    "IER3",
+                    "TFPI2", 
+                    "GDF15", 
+                    "GAPDH",
+                    "HSP90AB1",
+                    "RPL30", 
+                    "RPS17", 
+                    "PPIA", 
+                    "POP4",
+                    "KCTD13", 
+                    "ALDOA",
+                    "MAPK3",
+                    "TAOK2")
+genes_of_interest=c("ANGPT2","DOC2A","ISM2","TBX6")
+genes_of_interest=c("IER3","PKIB","PKM","CLU")
+genes_of_interest=c("GRN")
+data=read.table("merged_rsem/tpm.isoform.txt",header=TRUE,sep='\t',row.names = 1,check.names=F)
+pct=read.table("merged_rsem/iso_pct.isoform.txt",header=T,sep='\t',row.names=1,check.names=F)
 batches=read.table("merged_rsem/batches.txt",header=TRUE,sep='\t',row.names=1)
 genes=data$gene_id
 symbols=data$Symbol

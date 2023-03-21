@@ -7,7 +7,7 @@ asddm_vs_asdn=row.names(read.table("../diff_genes/ConditionASDDM_vs_ConditionASD
 asdn_vs_tdn=row.names(read.table("../diff_genes/ConditionASDN_vs_ConditionTDN.de.sig.tsv"))
 
 library(RColorBrewer)
-myCol <- brewer.pal(3, "Pastel2")
+myCol <- c('#377eb8','#4daf4a','#e41a1c')
 venn.diagram(
   x = list(asddm_vs_tdn, asdn_vs_tdn, asddm_vs_asdn),
   category.names = c("ASDDM_vs_TDN" , "ASDN_vs_TDN" , "ASDDM_vs_ASDN"),
