@@ -94,14 +94,15 @@ for(comparison in c('ConditionASDDM_vs_ConditionASDN','ConditionASDDM_vs_Conditi
     cur_corvals=cur_corvals[rowMaxs(abs(as.matrix(cur_corvals)))>0.7,]
     obs_string=paste(measurement,'observation')
     print(dim(cur_corvals))
-    pheatmap(as.matrix(cur_corvals),main=paste('Spearman rho', comparison, obs_string,sep='\n'), fontsize_row=2)
-    #png(paste0('spearman.',comparison,'.',measurement,'.png'),width=30,height=6,res=160,units='in')
+    svg(paste0('spearman.',comparison,'.',measurement,'.svg'),width=4,height=10)
+    pheatmap(as.matrix(cur_corvals),main=paste('Spearman rho', comparison, obs_string,sep='\n'), fontsize_row=5)
+    dev.off()
+    
     #print(Heatmap(as.matrix(cur_corvals),name=paste('Spearman cor', comparison, obs_string,sep='\n'),
     #        column_title='Gene',
     #        row_title = 'Clinical Feature',
     #        column_title_side = 'bottom',
     #        row_title_side = 'right'))
-    #dev.off()
     
     write.table(cur_corvals,file=paste0('spearman.',comparison,'.',measurement,'.tsv'),
                 row.names=T,

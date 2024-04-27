@@ -36,6 +36,7 @@ genes_of_interest=c("IFI6",
 genes_of_interest=c("ANGPT2","DOC2A","ISM2","TBX6")
 genes_of_interest=c("IER3","PKIB","PKM","CLU")
 genes_of_interest=c("GRN")
+genes_of_interest=c("HSPB1")
 data=read.table("merged_rsem/tpm.isoform.txt",header=TRUE,sep='\t',row.names = 1,check.names=F)
 pct=read.table("merged_rsem/iso_pct.isoform.txt",header=T,sep='\t',row.names=1,check.names=F)
 batches=read.table("merged_rsem/batches.txt",header=TRUE,sep='\t',row.names=1)

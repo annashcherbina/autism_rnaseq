@@ -11,13 +11,12 @@ myCol <- c('#377eb8','#4daf4a','#e41a1c')
 venn.diagram(
   x = list(asddm_vs_tdn, asdn_vs_tdn, asddm_vs_asdn),
   category.names = c("ASDDM_vs_TDN" , "ASDN_vs_TDN" , "ASDDM_vs_ASDN"),
-  filename = 'Venn.png',
+  filename = 'Venn.svg',
   output=TRUE,
   # Output features
-  imagetype="png" ,
+  imagetype="svg" ,
   height = 800 , 
   width = 800 , 
-  resolution = 300,
   compression = "lzw",
   
   # Circles

@@ -85,11 +85,12 @@ p2=ggplot(data=pca_df,aes(x=pca_df$PC1,
 p3=ggplot(data=pca_df,aes(x=pca_df$PC1,
                           y=pca_df$PC2,
                           color=pca_df$Condition))+
-  geom_point(size=3)+
+  geom_point(size=4)+
   xlab(paste("PC1:",var_explained[1]))+
   ylab(paste("PC2:",var_explained[2]))+
   ggtitle("PCA: PC1 vs PC2")+
-  theme_bw()
+  theme_bw(20)+scale_color_manual(name='Group',values=c('#377eb8','#e41a1c','#4daf4a'))+
+  theme(legend.position = "bottom")
 
 source('~/helpers.R')
 multiplot(p1,p2,p3,cols=3)
@@ -199,13 +200,13 @@ for(i in seq(1,3))
   down_count=paste('down',sum(as.integer(de_sig$logFC<0)))
   title=paste(comparison,up_count,down_count,sep='\n')
   
-  #print(volcano_wrapper(de,
-  #                      title=title,
-  #                      genes_to_highlight = labels,
-  #                      pval_thresh=pthresh,
-  #                      lfc_thresh=lfc_thresh,
-  #                      xlim=c(-8,8),
-  #                      ylim=c(0,15)))
+  print(volcano_wrapper(de,
+                        title=title,
+                        genes_to_highlight = labels,
+                        pval_thresh=pthresh,
+                        lfc_thresh=lfc_thresh,
+                        xlim=c(-8,8),
+                        ylim=c(0,15)))
   
   
   #get pathway enrichments

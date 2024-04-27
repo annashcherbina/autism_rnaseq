@@ -40,7 +40,7 @@ cols <- colorRampPalette(brewer.pal(10, "RdBu"))(256)
 
 distCor <- function(x) as.dist(1-cor(t(x)))
 hclustAvg <- function(x) hclust(x, method="average")
-#png(file="genes.NPC.pval.lt.5e-11.fc.7.png",width=10,height=9,units='in',res=300)
+svg(file="genes.NPC.pval.lt.5e-11.fc.7.svg",width=10,height=9,units='in',res=300)
 heatmap.3(data,
           trace="none",
           scale="row",
@@ -53,10 +53,10 @@ heatmap.3(data,
           ColSideColorsSize = 1,
           ColSideColors = as.matrix(colsidecolors),
           symbreak=FALSE,
-          cexRow=0.7,
+          cexRow=0.4,
           margins=c(5,20))
 
 legend('topright',legend=c("TDN","ASDN","ASDDM"),
        fill=c("#FF0000","#00FF00","#0000FF"),
        border=FALSE, bty="n", y.intersp = 0.6, cex=0.7)
-#dev.off()
+dev.off()

@@ -27,7 +27,12 @@ genes_of_interest=c("CD99",
 #genes_of_interest=c("IER3", "PKM","PKIB","CUL3")
 #genes_of_interest=c("GRN")
 #data=read.table("NPC_only.corrected_tpm.txt",header=TRUE,sep='\t',row.names = 1,check.names=FALSE)
-genes_of_interest=c("PARP1","CASP3","CD24","CD274","B2M")
+#genes_of_interest=c("PARP1","CASP3","CD24","CD274","B2M")
+#genes_of_interest=c("FEN1","LIG3","MRE11","NBN","XRCC1")
+#genes_of_interest=c("LMNB1")
+genes_of_interest=c("PARP1")
+genes_of_interest=c("CD99L2")
+genes_of_interest=c("HSPB1")
 data=read.table("NPC_only.corrected_tpm.txt",header=TRUE,sep='\t',row.names = 1,check.names=FALSE)
 
 #subset data to genes of interest
@@ -55,4 +60,4 @@ plot.list = lapply(genes_of_interest, function(gene){
     return(p)
   })
 library(gridExtra)
-grid.arrange(grobs = plot.list, ncol=3,nrow=2)
+grid.arrange(grobs = plot.list, ncol=1,nrow=1)
