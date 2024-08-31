@@ -128,6 +128,12 @@ p2=ggplot(data=pca_df,aes(x=pca_df$PC1,
   ggtitle("PCA: PC1 vs PC2")+
   theme_bw()
 
+pca_df$ Condition=as.character(pca_df$Condition)
+pca_df$Condition[pca_df$Condition=='TDN']='TD-N'
+pca_df$Condition[pca_df$Condition=='ASDDM']='ASD-DM'
+pca_df$Condition[pca_df$Condition=='ASDN']='ASD-N'
+
+
 p3=ggplot(data=pca_df,aes(x=pca_df$PC1,
                           y=pca_df$PC2,
                           color=pca_df$Condition))+
@@ -138,7 +144,7 @@ p3=ggplot(data=pca_df,aes(x=pca_df$PC1,
   scale_color_manual(name="Group",values=c('#377eb8','#4daf4a','#e41a1c'))+
   theme_bw()+
   theme(legend.position="bottom")
-
+ggsave('figure1_L.pdf',p3,width = 4, height = 4, units = "in", device = cairo_pdf())
 multiplot(p1,p2,p3,cols=3)
 batches$Condition=paste0("NPC",batches$Condition)
 #GET VARIANCE ACROSS SAMPLES RELATIVE TO THE MEAN 

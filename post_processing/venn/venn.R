@@ -10,13 +10,13 @@ library(RColorBrewer)
 myCol <- c('#377eb8','#4daf4a','#e41a1c')
 venn.diagram(
   x = list(asddm_vs_tdn, asdn_vs_tdn, asddm_vs_asdn),
-  category.names = c("ASDDM_vs_TDN" , "ASDN_vs_TDN" , "ASDDM_vs_ASDN"),
-  filename = 'Venn.svg',
+  category.names = c("ASD-DM vs TD-N" , "ASD-N vs TD-N" , "ASD-DM vs ASD-N"),
+  filename = 'Figure1_M.png',
   output=TRUE,
   # Output features
-  imagetype="svg" ,
-  height = 800 , 
-  width = 800 , 
+  imagetype="png" ,
+  height = 1400 , 
+  width = 1400 , 
   compression = "lzw",
   
   # Circles
